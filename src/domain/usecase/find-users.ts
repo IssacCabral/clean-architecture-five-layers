@@ -1,10 +1,6 @@
 import { UserModel } from "../models/user"
 import { IPagination } from "../models/pagination"
-
-export type PaginateOptions = {
-  page: number
-  perPage: number
-}
+import { PaginateOptions } from "../types/paginate-options"
 
 export interface IFindUsers{
   find(pagination: PaginateOptions): Promise<IPagination<UserModel>>

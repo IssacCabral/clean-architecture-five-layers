@@ -1,6 +1,5 @@
 import { UserModel } from "../models/user"
-
-export type CreateUserParams = Omit<UserModel, 'id' | 'createdAt' | 'updatedAt'>
+import { CreateUserParams } from "../types/create-user-params"
 
 export interface ICreateUser{
   create(user: CreateUserParams): Promise<UserModel | Error>
