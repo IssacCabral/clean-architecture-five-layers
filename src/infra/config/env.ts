@@ -8,4 +8,5 @@ export default {
   TYPEORM_USERNAME: process.env.TYPEORM_USERNAME,
   TYPEORM_PASSWORD: process.env.TYPEORM_PASSWORD,
   TYPEORM_DATABASE: process.env.TYPEORM_DATABASE,
+  SERVER_PORT: process.env.SERVER_PORT
 }

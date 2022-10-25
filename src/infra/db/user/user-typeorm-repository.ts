@@ -15,6 +15,8 @@ export class UserTypeOrmRepository implements ICreateUserRepository {
 
     const userAdapted = userEntityAdapter(user)
 
+    await connection.destroy()
+    
     return userAdapted
   }
 }
