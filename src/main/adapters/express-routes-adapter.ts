@@ -2,7 +2,7 @@ import {Request, Response} from 'express'
 import { HttpRequest, HttpResponse, IController } from '../../presentation/protocols';
 
 export class ExpressAdapter{
-  static create(controller: IController){
+  static adapt(controller: IController){
     return async function(request: Request, response: Response){
       const httpRequest: HttpRequest = {
         body: request.body,
