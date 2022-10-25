@@ -1,5 +1,5 @@
 export abstract class BaseEntity<T>{
-  id: string
+  id: number
   createdAt: Date
   updatedAt: Date
   
