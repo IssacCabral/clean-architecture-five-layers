@@ -1,6 +1,6 @@
 import { UserModel } from "../../domain/models/user";
 import { CreateUserParams } from "../../domain/types/create-user-params";
-import { ICreateUser } from "../../domain/usecase/create-user";
+import { ICreateUser } from "../../domain/usecases/create-user";
 import { IHasher } from "../protocols/cryptography/hasher";
 import { ICreateUserRepository } from "../protocols/db/create-user-repository";
 import { IFindUserByCpfRepository } from "../protocols/db/find-user-by-cpf-repository";
