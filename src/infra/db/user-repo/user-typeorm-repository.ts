@@ -18,10 +18,6 @@ export class UserTypeOrmRepository implements
     const user = usersRepository.create(userParams)
     await usersRepository.save(user)
 
-    console.log(user)
-
-    //const userAdapted = userEntityAdapter(user)
-
     return user
   }
 
@@ -32,7 +28,7 @@ export class UserTypeOrmRepository implements
     if(!user) {
       return null
     }
-    //const userAdapted = userEntityAdapter(user)
+
     return user
   }
 
@@ -43,7 +39,7 @@ export class UserTypeOrmRepository implements
     if(!user){
       return null
     }
-    //const userAdapted = userEntityAdapter(user)
+
     return user
   }
 }
