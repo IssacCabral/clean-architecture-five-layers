@@ -5,7 +5,6 @@ import { IFindUserByCpfRepository } from "../../../data/protocols/db/find-user-b
 import { IFindUserByEmailRepository } from "../../../data/protocols/db/find-user-by-email-repository";
 import { UserModel } from "../../../domain/models/user";
 import { CreateUserParams } from "../../../domain/types/create-user-params";
-//import { userEntityAdapter } from "./adapters/user-entity-adapter";
 
 export class UserTypeOrmRepository implements
     ICreateUserRepository,
