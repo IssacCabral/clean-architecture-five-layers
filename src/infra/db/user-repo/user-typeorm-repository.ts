@@ -14,7 +14,6 @@ export class UserTypeOrmRepository implements
     IFindUserByEmailRepository,
     IDeleteUserRepository {
   
-  
   private usersRepository: Repository<User>
 
   constructor() {
@@ -41,7 +40,9 @@ export class UserTypeOrmRepository implements
   }
 
   async deleteUser(id: number): Promise<boolean> {
-
-    throw new Error("Method not implemented.");
+    const user = await this.usersRepository.findOneBy({id})
+    const exclusionResult = await this.usersRepository.delete(user!)
+    if(exclusionResult) return true
+    return false
   }
 }
