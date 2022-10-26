@@ -1,4 +1,5 @@
 import {Entity, Column, CreateDateColumn, UpdateDateColumn, PrimaryGeneratedColumn} from 'typeorm'
+import { hashPasswordTransform } from './hash-password-transform'
 
 @Entity('users')
 export class User{
@@ -14,7 +15,10 @@ export class User{
   @Column()
   email: string
 
-  @Column({select: false})
+  @Column({
+    select: false,
+    transformer: hashPasswordTransform
+  })
   password: string
 
   @CreateDateColumn()

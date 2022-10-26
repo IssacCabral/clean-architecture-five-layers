@@ -17,7 +17,9 @@ export class UserTypeOrmRepository implements
     const user = usersRepository.create(userParams)
     await usersRepository.save(user)
 
-    return user
+    const userWithoutPassword: User = {...user, password: undefined as any}
+
+    return userWithoutPassword
   }
 
   async findByEmail(email: string): Promise<UserModel | null> {
