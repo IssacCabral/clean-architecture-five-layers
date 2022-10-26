@@ -1,5 +1,5 @@
-import { UserModel } from "../models/user"
+import { UserModel } from "../models/user";
 
 export interface IDeleteUser{
-  delete(id: string): Promise<UserModel | Error>
+  delete(id: number): Promise<UserModel | Error>
 }
