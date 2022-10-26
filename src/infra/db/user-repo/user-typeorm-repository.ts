@@ -13,8 +13,7 @@ export class UserTypeOrmRepository implements
     IFindUserByEmailRepository {
   
   async createUser(userParams: CreateUserParams): Promise<UserModel> {
-    const connection = await dataSource.initialize()
-    const usersRepository = connection.getRepository(User)
+    const usersRepository = dataSource.getRepository(User)
 
     const user = usersRepository.create(userParams)
     await usersRepository.save(user)
@@ -23,18 +22,14 @@ export class UserTypeOrmRepository implements
 
     //const userAdapted = userEntityAdapter(user)
 
-    await connection.destroy()
-
     return user
   }
 
   async findByEmail(email: string): Promise<UserModel | null> {
-    const connection = await dataSource.initialize()
-    const usersRepository = connection.getRepository(User)
+    const usersRepository = dataSource.getRepository(User)
 
     const user = await usersRepository.findOneBy({email})
     if(!user) {
-      await connection.destroy()
       return null
     }
     //const userAdapted = userEntityAdapter(user)
@@ -42,12 +37,10 @@ export class UserTypeOrmRepository implements
   }
 
   async findByCpf(cpf: string): Promise<UserModel | null> {
-    const connection = await dataSource.initialize()
-    const usersRepository = connection.getRepository(User)
+    const usersRepository = dataSource.getRepository(User)
 
     const user = await usersRepository.findOneBy({cpf})
     if(!user){
-      await connection.destroy()
       return null
     }
     //const userAdapted = userEntityAdapter(user)
