@@ -7,6 +7,7 @@ export const SetUpRoutes = (app: Express) => {
 
   router.get('/welcome', (req, res) => {return res.json({message: 'Bem vindo ao server'})})
   router.post('/users', ExpressAdapter.adapt(makeCreateUserController()))
+  //router.post()
 
   app.use(router)
 }

@@ -16,7 +16,7 @@ export class DbDeleteUser implements IDeleteUser{
 
     await this.deleteUserRepository.deleteUser(id)
 
-    throw new Error("Method not implemented.");
+    return user
   }
 
 }
