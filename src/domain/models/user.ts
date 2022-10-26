@@ -1,8 +1,9 @@
-import { IUserType } from "../types/user-type";
-import { BaseEntity } from "./base-entity";
-
-export class UserModel extends BaseEntity<IUserType>{
-  constructor(props: IUserType){
-    super(props)
-  }
+export type UserModel = {
+  id: number
+  name: string
+  cpf: string
+  email: string
+  password: string
+  createdAt: Date
+  updatedAt: Date
 }

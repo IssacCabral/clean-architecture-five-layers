@@ -18,21 +18,13 @@ export class CreateUserController implements IController {
       const error = this.validation.validate(httpRequest.body);
       if (error) {return badRequest(error)}
 
-      const {name, cpf, email, password} = httpRequest.body
-
-      const createUserParams = {name, cpf, email, password}
-      const createUserResult = await this.createUser.create({props: createUserParams})
+      const createUserResult = await this.createUser.create(httpRequest.body)
 
       if(createUserResult instanceof Error){
         return badRequest(createUserResult)
       }
-
-      const {...props} = createUserResult.props      
-      const {props: undefined, ...base} = createUserResult
       
-      const user = Object.assign({}, base, props)
-      
-      return created(user)
+      return created(createUserResult)
     } catch (error) {
       return serverError(error)
     }

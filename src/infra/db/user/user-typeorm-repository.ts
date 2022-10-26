@@ -5,7 +5,7 @@ import { IFindUserByCpfRepository } from "../../../data/protocols/db/find-user-b
 import { IFindUserByEmailRepository } from "../../../data/protocols/db/find-user-by-email-repository";
 import { UserModel } from "../../../domain/models/user";
 import { CreateUserParams } from "../../../domain/types/create-user-params";
-import { userEntityAdapter } from "./adapters/user-entity-adapter";
+//import { userEntityAdapter } from "./adapters/user-entity-adapter";
 
 export class UserTypeOrmRepository implements
     ICreateUserRepository,
@@ -16,14 +16,16 @@ export class UserTypeOrmRepository implements
     const connection = await dataSource.initialize()
     const usersRepository = connection.getRepository(User)
 
-    const user = await usersRepository.save({ ...userParams.props });
-    await usersRepository.save(user);
+    const user = usersRepository.create(userParams)
+    await usersRepository.save(user)
 
-    const userAdapted = userEntityAdapter(user);
-    
+    console.log(user)
+
+    //const userAdapted = userEntityAdapter(user)
+
     await connection.destroy()
 
-    return userAdapted;
+    return user
   }
 
   async findByEmail(email: string): Promise<UserModel | null> {
@@ -31,9 +33,12 @@ export class UserTypeOrmRepository implements
     const usersRepository = connection.getRepository(User)
 
     const user = await usersRepository.findOneBy({email})
-    if(!user) return null
-    const userAdapted = userEntityAdapter(user)
-    return userAdapted
+    if(!user) {
+      await connection.destroy()
+      return null
+    }
+    //const userAdapted = userEntityAdapter(user)
+    return user
   }
 
   async findByCpf(cpf: string): Promise<UserModel | null> {
@@ -41,7 +46,11 @@ export class UserTypeOrmRepository implements
     const usersRepository = connection.getRepository(User)
 
     const user = await usersRepository.findOneBy({cpf})
-    const userAdapted = userEntityAdapter(user)
-    return userAdapted
+    if(!user){
+      await connection.destroy()
+      return null
+    }
+    //const userAdapted = userEntityAdapter(user)
+    return user
   }
 }

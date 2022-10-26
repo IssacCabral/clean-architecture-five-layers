@@ -5,6 +5,7 @@ import { IHasher } from "../protocols/cryptography/hasher";
 import { ICreateUserRepository } from "../protocols/db/create-user-repository";
 import { IFindUserByCpfRepository } from "../protocols/db/find-user-by-cpf-repository";
 import { IFindUserByEmailRepository } from "../protocols/db/find-user-by-email-repository";
+import { FieldInUseError } from "../../presentation/errors/field-in-use-error";
 
 export class DbCreateUser implements ICreateUser{
   constructor(
@@ -15,21 +16,21 @@ export class DbCreateUser implements ICreateUser{
   ) {}
 
   async create(user: CreateUserParams): Promise<UserModel | Error> {
-    const userWithCpf = await this.findUserByCpfRepository.findByCpf(user.props.cpf)
+    const userWithCpf = await this.findUserByCpfRepository.findByCpf(user.cpf)
     if(userWithCpf){
-      return new Error('cpf already exists')
+      return new FieldInUseError('cpf')
     }
 
-    const userWithEmail = await this.findUserByEmailRepository.findByEmail(user.props.email)
+    const userWithEmail = await this.findUserByEmailRepository.findByEmail(user.email)
     if(userWithEmail){
-      return new Error('email already exists')
+      return new FieldInUseError('email')
     }
 
-    const hashedPassword = await this.hasher.hash(user.props.password)
+    const hashedPassword = await this.hasher.hash(user.password)
 
-    user.props.password = hashedPassword
+    user.password = hashedPassword
 
-    const createdUser = await this.createUserRepository.createUser({props: user.props})
+    const createdUser = await this.createUserRepository.createUser(user)
     
     return createdUser
   }
