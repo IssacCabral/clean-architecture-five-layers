@@ -1,5 +1,5 @@
 import { IController } from "../../../../presentation/protocols"
-import { DeleteUserController } from "../../../../presentation/controllers/delete-user-controller/delete-user-controller"
+import { DeleteUserController } from "../../../../presentation/controllers/delete-user/delete-user-controller"
 import { makeDbDeleteUser } from "../../usecases/delete-user/db-delete-user-factory"
 
 export const makeDeleteUserController = (): IController => {
