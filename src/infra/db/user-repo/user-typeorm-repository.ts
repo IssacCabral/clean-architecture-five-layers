@@ -4,6 +4,7 @@ import { User } from "../typeorm/entities/user";
 import { ICreateUserRepository } from "../../../data/protocols/db/create-user-repository";
 import { IFindUserByCpfRepository } from "../../../data/protocols/db/find-user-by-cpf-repository";
 import { IFindUserByEmailRepository } from "../../../data/protocols/db/find-user-by-email-repository";
+import { IFindUserByIdRepository } from "../../../data/protocols/db/find-user-by-id-repository";
 import { UserModel } from "../../../domain/models/user";
 import { CreateUserParams } from "../../../domain/types/create-user-params";
 import { IDeleteUserRepository } from "../../../data/protocols/db/delete-user-repository";
@@ -12,6 +13,7 @@ export class UserTypeOrmRepository implements
     ICreateUserRepository,
     IFindUserByCpfRepository,
     IFindUserByEmailRepository,
+    IFindUserByIdRepository,
     IDeleteUserRepository {
   
   private usersRepository: Repository<User>
@@ -36,6 +38,11 @@ export class UserTypeOrmRepository implements
 
   async findByCpf(cpf: string): Promise<UserModel | null> {
     const user = await this.usersRepository.findOneBy({cpf})
+    return user
+  }
+
+  async findById(id: number): Promise<UserModel | null> {
+    const user = await this.usersRepository.findOneBy({id})
     return user
   }
 
