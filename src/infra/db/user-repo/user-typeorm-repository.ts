@@ -8,12 +8,16 @@ import { IFindUserByIdRepository } from "../../../data/protocols/db/find-user-by
 import { UserModel } from "../../../domain/models/user";
 import { CreateUserParams } from "../../../domain/types/create-user-params";
 import { IDeleteUserRepository } from "../../../data/protocols/db/delete-user-repository";
+import { IFindUsersRepository } from "../../../data/protocols/db/find-users-repository";
+import { Pagination } from "../../../domain/models/pagination";
+import { PaginateOptions } from "../../../domain/types/paginate-options";
 
 export class UserTypeOrmRepository implements
     ICreateUserRepository,
     IFindUserByCpfRepository,
     IFindUserByEmailRepository,
     IFindUserByIdRepository,
+    IFindUsersRepository,
     IDeleteUserRepository {
   
   private usersRepository: Repository<User>
@@ -44,6 +48,21 @@ export class UserTypeOrmRepository implements
   async findById(id: number): Promise<UserModel | null> {
     const user = await this.usersRepository.findOneBy({id})
     return user
+  }
+
+  async findUsers(pagination: PaginateOptions): Promise<Pagination<UserModel>> {
+    const {page, perPage} = pagination
+
+    const [users, count] = await this.usersRepository.findAndCount({
+      take: perPage || 4,
+      skip: (page - 1) * perPage || 0
+    })
+
+    return {
+      page,
+      perPage,
+      data: users
+    }
   }
 
   async deleteUser(id: number): Promise<boolean> {
