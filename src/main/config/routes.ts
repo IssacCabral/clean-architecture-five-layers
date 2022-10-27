@@ -5,6 +5,7 @@ import { makeDeleteUserController } from '../factories/controllers/delete-user/d
 import { makeFindUserByEmailController } from '../factories/controllers/find-user-by-email/find-user-by-email-controller-factory'
 import { makeFindUserByIdController } from '../factories/controllers/find-user-by-id/find-user-by-id-contoller-factory'
 import { makeFindUsersController } from '../factories/controllers/find-users/find-users-controller-factory'
+import { makeUpdateUserController } from '../factories/controllers/update-user/update-user-controller-factory'
 
 export const SetUpRoutes = (app: Express) => {
   const router = Router()
@@ -14,6 +15,7 @@ export const SetUpRoutes = (app: Express) => {
   router.get('/users/:id', ExpressAdapter.adapt(makeFindUserByIdController()))
   router.get('/users/email/:email', ExpressAdapter.adapt(makeFindUserByEmailController()))
   router.get('/users', ExpressAdapter.adapt(makeFindUsersController()))
+  router.patch('/users/:id', ExpressAdapter.adapt(makeUpdateUserController()))
   router.delete('/users/:id', ExpressAdapter.adapt(makeDeleteUserController()))
 
   app.use(router)

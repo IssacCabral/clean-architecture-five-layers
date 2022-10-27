@@ -11,6 +11,8 @@ import { IDeleteUserRepository } from "../../../data/protocols/db/delete-user-re
 import { IFindUsersRepository } from "../../../data/protocols/db/find-users-repository";
 import { Pagination } from "../../../domain/models/pagination";
 import { PaginateOptions } from "../../../domain/types/paginate-options";
+import { IUpdateUserRepository } from "../../../data/protocols/db/update-user-repository";
+import { UpdateUserParams } from "../../../domain/types/update-user-params";
 
 export class UserTypeOrmRepository implements
     ICreateUserRepository,
@@ -18,6 +20,7 @@ export class UserTypeOrmRepository implements
     IFindUserByEmailRepository,
     IFindUserByIdRepository,
     IFindUsersRepository,
+    IUpdateUserRepository,
     IDeleteUserRepository {
   
   private usersRepository: Repository<User>
@@ -65,10 +68,22 @@ export class UserTypeOrmRepository implements
     }
   }
 
+  async updateUser(id: number, params: UpdateUserParams): Promise<UserModel> {
+    const findUser = await this.usersRepository.findOne({where: {id}});
+
+    await this.usersRepository.update({id}, {...params})
+
+    const updatedUser = this.usersRepository.create({...findUser, ...params})
+    const user: User = {...updatedUser, password: undefined as any} 
+
+    return user
+  }
+
   async deleteUser(id: number): Promise<boolean> {
     const user = await this.usersRepository.findOneBy({id})
     const exclusionResult = await this.usersRepository.delete(user!)
     if(exclusionResult) return true
     return false
   }
+
 }
