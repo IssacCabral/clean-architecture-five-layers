@@ -9,8 +9,13 @@
     "moduleResolution": "node",
     "lib": ["es2015"],
     "rootDir": "./",
-    "experimentalDecorators": true,               
-    "emitDecoratorMetadata": true,   
-    "esModuleInterop": true          
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "esModuleInterop": true,
+    "baseUrl": "src",
+    "paths": {
+      "@domain/*": ["domain/*"],
+      "@protocols/*": ["protocols/*"]
+    }
   }
 }
