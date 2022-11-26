@@ -1,0 +1,35 @@
+version: "3"
+
+networks:
+  test_projects:
+    external: true
+
+services:
+  five_layers_api:
+    build:
+      context: .
+      dockerfile: ./Docker/api/Dockerfile
+    ports:
+      - 3000:3000
+    volumes:
+      - .:/app
+    networks:
+      - test_projects
+    depends_on:
+      - five_layers_db
+  
+  five_layers_db:
+    build:
+      context: ./Docker/db
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: five_layers_db
+    ports:
+      - "3306:3306"
+    volumes:
+      - db-data-five-layers:/var/lib/mysql
+    networks:
+      - test_projects
+  
+volumes:
+  db-data-five-layers:
