@@ -1,5 +1,5 @@
-import { UserModel } from "../../../domain/models/user"
+import { UserModel } from "@domain/models/user"
 
-export interface IFindUserByEmailRepository{
+export interface IFindUserByEmailRepository {
   findByEmail(email: string): Promise<UserModel | null>
 }
